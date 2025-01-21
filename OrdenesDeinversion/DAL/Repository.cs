@@ -39,7 +39,7 @@ namespace OrdenesDeinversion.DAL
             this.Context.Set<T>().Remove(entity);
         }
 
-        public T? Get(Guid id)
+        public T? Get(int id)
         {
             return this.Context.Set<T>().Find(id);
         }
@@ -49,7 +49,7 @@ namespace OrdenesDeinversion.DAL
             return this.Context.Set<T>();
         }
 
-        public async Task<T?> GetAsync(Guid id)
+        public async Task<T?> GetAsync(int id)
         {
             return await Context.Set<T>().FindAsync(id);
         }

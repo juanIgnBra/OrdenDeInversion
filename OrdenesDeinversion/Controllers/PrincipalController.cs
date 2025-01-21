@@ -79,7 +79,7 @@ namespace OrdenesDeinversion.Controllers
             }
         }
 
-        [HttpDelete, Route("GetOrdenDeInversion")]
+        [HttpGet, Route("GetOrdenDeInversion")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetOrdenDeInversion(int id)
