@@ -33,13 +33,26 @@ namespace OrdenesDeinversion.BusinessLogic.Implementations
                     throw new Exception("No existen activos por el ticker ingresado");
                 }
 
-                ordenesDeInversion.IdDeLaCuenta = request.IdDeLaCuenta;
-                ordenesDeInversion.Cantidad = request.Cantidad;
+                if (request.IdDeLaCuenta != 0)
+                    ordenesDeInversion.IdDeLaCuenta = request.IdDeLaCuenta;
+
+                if (request.Cantidad != 0)
+                    ordenesDeInversion.Cantidad = request.Cantidad;
+
                 ordenesDeInversion.Estado = (int)EstadoEnum.EJECUTADA;
-                ordenesDeInversion.NombreDelActivo = request.NombreDelActivo;
-                ordenesDeInversion.Operacion = request.Operacion;
-                ordenesDeInversion.Precio = request.Precio;
-                ordenesDeInversion.MontoTotal = ReglasDeNegocio.CalcularTotalSegunTipoActivo(activos, request);
+
+                if (!string.IsNullOrEmpty(request.NombreDelActivo))
+                    ordenesDeInversion.NombreDelActivo = request.NombreDelActivo;
+
+                if (!string.IsNullOrEmpty(request.Operacion))
+                    ordenesDeInversion.Operacion = request.Operacion;
+
+                if (request.Precio != 0)
+                    ordenesDeInversion.Precio = request.Precio;
+
+
+                if (request.Precio != 0 && request.Cantidad != 0)
+                    ordenesDeInversion.MontoTotal = ReglasDeNegocio.CalcularTotalSegunTipoActivo(activos, request);
 
                 return await servicioOrdenesDeInversion.ActualizarOrdenDeInversion(ordenesDeInversion);
             }

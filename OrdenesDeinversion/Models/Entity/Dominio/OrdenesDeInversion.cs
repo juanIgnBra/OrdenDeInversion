@@ -6,17 +6,12 @@ namespace OrdenesDeinversion.Models.Entity.Dominio
     {
 
         [Key]
-        public int IdDeLaOrden { get; set; }
-        [Required]
-        public int IdDeLaCuenta { get; set; }
-        [Required]
-        public string NombreDelActivo { get; set; }
-        [Required]
-        public int Cantidad { get; set; }
-        [Required]
-        public decimal Precio { get; set; }
-        [Required]
-        public string Operacion { get; set; }
+        public int? IdDeLaOrden { get; set; }
+        public int? IdDeLaCuenta { get; set; }
+        public string? NombreDelActivo { get; set; }
+        public int? Cantidad { get; set; }
+        public decimal? Precio { get; set; }
+        public string? Operacion { get; set; }
         public int? Estado { get; set; }
         public decimal? MontoTotal { get; set; }
 

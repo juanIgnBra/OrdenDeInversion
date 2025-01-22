@@ -18,15 +18,20 @@ namespace OrdenesDeinversion.Models.Entity
 
         public DbSet<OrdenesDeInversion> ordenesDeInversion { get; set; }
         public DbSet<Activos> activos { get; set; }
+        public DbSet<Usuarios> usuarios { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new OrdenesDeInversionConfiguracion());
             modelBuilder.ApplyConfiguration(new ActivosConfiguracion());
+            modelBuilder.ApplyConfiguration(new UsuariosConfiguracion());
 
 
             //Carga de datos al modelo
+
+            modelBuilder.Entity<Usuarios>().HasData(
+            new { Id = 9, Username = "admin", Password = "1234" });
 
 
             modelBuilder.Entity<Activos>().HasData(

@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using OrdenesDeinversion.Helper;
 using OrdenesDeinversion.Models.Negocio;
 using OrdenesDeinversion.BusinessLogic.Contracts;
+using System.ComponentModel.DataAnnotations;
 
 namespace OrdenesDeinversion.Controllers
 {
@@ -27,7 +28,7 @@ namespace OrdenesDeinversion.Controllers
         }
 
 
-        //[Authorize]
+        [Authorize]
         [HttpPost, Route("CrearOrdenDeInversion")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
@@ -44,11 +45,11 @@ namespace OrdenesDeinversion.Controllers
                 return BadRequest(ex);
             }
         }
-
+        [Authorize]
         [HttpPut, Route("ActualizarOrdenDeInversion")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> ActualizarOrdenDeInversion(OrdenParameters request, int id)
+        public async Task<IActionResult> ActualizarOrdenDeInversion(OrdenParameters request, [Required] int id)
         {
             try
             {
@@ -61,7 +62,7 @@ namespace OrdenesDeinversion.Controllers
                 return BadRequest(ex);
             }
         }
-
+        [Authorize]
         [HttpDelete, Route("DeleteOrdenDeInversion")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
@@ -78,7 +79,7 @@ namespace OrdenesDeinversion.Controllers
                 return BadRequest(ex);
             }
         }
-
+        [Authorize]
         [HttpGet, Route("GetOrdenDeInversion")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]

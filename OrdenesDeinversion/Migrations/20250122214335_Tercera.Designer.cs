@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OrdenesDeinversion.Models.Entity;
 
@@ -11,9 +12,11 @@ using OrdenesDeinversion.Models.Entity;
 namespace OrdenesDeinversion.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20250122214335_Tercera")]
+    partial class Tercera
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,19 +128,19 @@ namespace OrdenesDeinversion.Migrations
 
             modelBuilder.Entity("OrdenesDeinversion.Models.Entity.Dominio.OrdenesDeInversion", b =>
                 {
-                    b.Property<int?>("IdDeLaOrden")
+                    b.Property<int>("IdDeLaOrden")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("IdDeLaOrden"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDeLaOrden"));
 
-                    b.Property<int?>("Cantidad")
+                    b.Property<int>("Cantidad")
                         .HasColumnType("int");
 
                     b.Property<int?>("Estado")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdDeLaCuenta")
+                    b.Property<int>("IdDeLaCuenta")
                         .HasColumnType("int");
 
                     b.Property<decimal?>("MontoTotal")
@@ -148,9 +151,10 @@ namespace OrdenesDeinversion.Migrations
                         .HasColumnType("varchar(32)");
 
                     b.Property<string>("Operacion")
+                        .IsRequired()
                         .HasColumnType("char(2)");
 
-                    b.Property<decimal?>("Precio")
+                    b.Property<decimal>("Precio")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("IdDeLaOrden");
