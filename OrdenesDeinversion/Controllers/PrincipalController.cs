@@ -6,6 +6,7 @@ using OrdenesDeinversion.Helper;
 using OrdenesDeinversion.Models.Negocio;
 using OrdenesDeinversion.BusinessLogic.Contracts;
 using System.ComponentModel.DataAnnotations;
+using OrdenesDeinversion.Models.Error;
 
 namespace OrdenesDeinversion.Controllers
 {
@@ -41,8 +42,8 @@ namespace OrdenesDeinversion.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"CrearOrdenDeInversion_error : {JsonConvert.SerializeObject(ex)}".Sanitize());
-                return BadRequest(ex);
+               _logger.LogError($"CrearOrdenDeInversion_error : {JsonConvert.SerializeObject(ex)}".Sanitize());
+                return StatusCode(500, new Error() { statusCode = 500, Detail = ex.Message, Message = ex?.StackTrace });
             }
         }
         [Authorize]
@@ -59,14 +60,14 @@ namespace OrdenesDeinversion.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"ActualizarOrdenDeInversion_error : {JsonConvert.SerializeObject(ex)}".Sanitize());
-                return BadRequest(ex);
+                return StatusCode(500, new Error() { statusCode = 500, Detail = ex.StackTrace, Message = ex?.Message });
             }
         }
         [Authorize]
         [HttpDelete, Route("DeleteOrdenDeInversion")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> DeleteOrdenDeInversion(int id)
+        public async Task<IActionResult> DeleteOrdenDeInversion([Required] int id)
         {
             try
             {
@@ -76,24 +77,28 @@ namespace OrdenesDeinversion.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"DeleteOrdenDeInversion_error : {JsonConvert.SerializeObject(ex)}".Sanitize());
-                return BadRequest(ex);
+                return StatusCode(500, new Error() { statusCode = 500, Detail = ex.StackTrace, Message = ex?.Message });
             }
         }
         [Authorize]
         [HttpGet, Route("GetOrdenDeInversion")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetOrdenDeInversion(int id)
+        public async Task<IActionResult> GetOrdenDeInversion([Required] int id)
         {
             try
             {
                 var ordenDeInversion = await consultarOrdenDeInversion.GetOperacion(id);
-                return Ok(ordenDeInversion);
+
+                if (ordenDeInversion != null)
+                    return Ok(ordenDeInversion);
+                else
+                    return NoContent();
             }
             catch (Exception ex)
             {
                 _logger.LogError($"GetOrdenDeInversion_error : {JsonConvert.SerializeObject(ex)}".Sanitize());
-                return BadRequest(ex);
+                return StatusCode(500, new Error() { statusCode = 500, Detail = ex.StackTrace, Message = ex?.Message });
             }
         }
 

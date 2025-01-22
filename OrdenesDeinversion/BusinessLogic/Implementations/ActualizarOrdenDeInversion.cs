@@ -27,16 +27,19 @@ namespace OrdenesDeinversion.BusinessLogic.Implementations
                     throw new Exception("No existen orden de inversion");
                 }
 
+                if(string.IsNullOrEmpty(request.Ticker))
+                    throw new Exception("Se debe ingresar un Ticker");
+
                 var activos = await servicioActivosFinanciero.VerificarServicioFinanciero(request.Ticker);
                 if (activos == null)
                 {
                     throw new Exception("No existen activos por el ticker ingresado");
                 }
 
-                if (request.IdDeLaCuenta != 0)
+                if (request.IdDeLaCuenta != null)
                     ordenesDeInversion.IdDeLaCuenta = request.IdDeLaCuenta;
 
-                if (request.Cantidad != 0)
+                if (request.Cantidad != null)
                     ordenesDeInversion.Cantidad = request.Cantidad;
 
                 ordenesDeInversion.Estado = (int)EstadoEnum.EJECUTADA;
@@ -47,11 +50,11 @@ namespace OrdenesDeinversion.BusinessLogic.Implementations
                 if (!string.IsNullOrEmpty(request.Operacion))
                     ordenesDeInversion.Operacion = request.Operacion;
 
-                if (request.Precio != 0)
+                if (request.Precio != null)
                     ordenesDeInversion.Precio = request.Precio;
 
 
-                if (request.Precio != 0 && request.Cantidad != 0)
+                if (request.Precio != null && request.Cantidad != null)
                     ordenesDeInversion.MontoTotal = ReglasDeNegocio.CalcularTotalSegunTipoActivo(activos, request);
 
                 return await servicioOrdenesDeInversion.ActualizarOrdenDeInversion(ordenesDeInversion);
